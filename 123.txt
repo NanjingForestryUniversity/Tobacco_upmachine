@@ -1,0 +1,30 @@
+connect plc success
+>>> connect to monitor successfully! >>> 
+>>> load system parameter successfully! >>> 
+ welcome dk ! 
+    Display ID: SF3000-GE04K-10C-00 00:26:ac:a1:00:9d [192.168.15.105]
+    Display ID: FX10e 70:f8:e7:b0:07:c4 [169.254.128.27]
+set ip success
+*** Unable to connect to FX10e 70:f8:e7:b0:07:c4 [169.254.128.27]
+*** init camera error, error code: -1 ***
+>>> try to init camera again... >>>
+    Display ID: SF3000-GE04K-10C-00 00:26:ac:a1:00:9d [192.168.15.105]
+    Display ID: FX10e 70:f8:e7:b0:07:c4 [192.168.123.3]
+set ip success
+>>> Successfully connected to FX10e 70:f8:e7:b0:07:c4 [192.168.123.3]
+
+>>> load calibration init success! >>> 
+>>> Connecting to SF3000-GE04K-10C-00 00:26:ac:a1:00:9d [192.168.15.105]
+>>> Successfully connected to SF3000-GE04K-10C-00 00:26:ac:a1:00:9d [192.168.15.105]
+
+>>> init camera successfully 
+ hello dk ! 
+>>> spec threshold 4 send to python
+>>> rgb threshold 6 send to python
+new connection to lower machine!
+receive message from suhandong
+start
+queue buffer successfully...
+running on 0
+queue buffer successfully...
+>>> start acquisition >>>

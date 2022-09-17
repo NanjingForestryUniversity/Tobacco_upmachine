@@ -1,0 +1,5 @@
+*.o
+saved_image
+.qmake.stash
+doc
+log
