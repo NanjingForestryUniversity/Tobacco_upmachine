@@ -302,7 +302,14 @@ void Widget::load_system_parameter()
     }
     fin.close();
     parameter->lamp_used_time = std::stol(parameter->file_info[0]);
+    parameter->runtime = std::stol(parameter->file_info[2]);
     parameter->current_time = QDateTime::currentDateTime();
+
+    int n = parameter->runtime / 3600;
+    ui->label_runtime->setNum(n);
+    n = parameter->lamp_used_time / 3600;
+    ui->label_lamptime->setNum(n);
+
 
     cout << ">>> load system parameter successfully! >>> " << endl;
 }
@@ -529,6 +536,10 @@ void Widget::On_btn_start_clicked()
 
     /*记录时长开始*/
     parameter->lamp_timer.start();
+    parameter->work_timer.start();
+
+
+//    parameter->starttime = QTime::currentTime();
 
     camera->register_callback_acquisition();
 
@@ -590,7 +601,12 @@ void Widget::On_btn_stop_clicked()
 
     /*停止计时器记录时长*/
     uint32_t time_elapsed = parameter->lamp_timer.elapsed() / 1000;
+    parameter->runtime += parameter->work_timer.elapsed() / 1000;
     parameter->lamp_used_time += time_elapsed;
+
+//    parameter->stoptime = QTime::currentTime();
+
+//    parameter->runtime += parameter->starttime.secsTo(parameter->stoptime);
 
     camera->unregister_data_callback();
     ui->lab_info->setText("停止");
@@ -598,11 +614,16 @@ void Widget::On_btn_stop_clicked()
     ui->btn_1to2->setEnabled(true);
 
     parameter->file_info[0] = to_string(parameter->lamp_used_time);
+    parameter->file_info[2] = to_string(parameter->runtime);
     ofstream fout;
     fout.open(sys_file, ios::out | ios::trunc);
     for(auto s : parameter->file_info)
         fout << s << endl;
     fout.close();
+
+    ui->label_runtime->setNum((int)(parameter->runtime / 3600));
+    ui->label_lamptime->setNum((int)(parameter->lamp_used_time / 3600));
+
 //    cout << "used time: " << parameter->file_info[0] << endl;
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setEnabled(false);
@@ -1534,4 +1555,17 @@ void Widget::on_radioButton_manul_clicked(bool checked)
 {
         ui->groupBox->setEnabled(checked);
         ui->groupBox_2->setEnabled(!checked);
+}
+
+void Widget::on_btn_lamp_reset_clicked()
+{
+    parameter->lamp_used_time = 0;
+    parameter->file_info[0] = to_string(parameter->lamp_used_time);
+    parameter->file_info[2] = to_string(parameter->runtime);
+    ofstream fout;
+    fout.open(sys_file, ios::out | ios::trunc);
+    for(auto s : parameter->file_info)
+        fout << s << endl;
+    fout.close();
+    ui->label_lamptime->setNum((int)parameter->lamp_used_time);
 }

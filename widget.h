@@ -181,6 +181,8 @@ private slots:
 
     void on_radioButton_manul_clicked(bool checked);
 
+    void on_btn_lamp_reset_clicked();
+
 private:
     Ui::Widget *ui;
 };
